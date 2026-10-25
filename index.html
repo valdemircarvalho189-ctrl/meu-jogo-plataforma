@@ -1,0 +1,251 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minha Lojinha</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+
+  <header class="topo">
+    <a href="#" class="logo">Minha <span>Lojinha</span></a>
+
+    <nav>
+      <a href="#produtos">Produtos</a>
+      <a href="#administracao">Administrar loja</a>
+    </nav>
+
+    <button class="botao-carrinho" onclick="mostrarCarrinho()">
+      🛒 Carrinho (<span id="quantidadeCarrinho">0</span>)
+    </button>
+  </header>
+
+  <section class="banner">
+    <div>
+      <p class="etiqueta">BEM-VINDO À NOSSA LOJA</p>
+      <h1>Encontre seus produtos favoritos!</h1>
+      <p>Qualidade, bons preços e ofertas especiais para você.</p>
+      <a href="#produtos" class="botao principal">Ver produtos</a>
+    </div>
+  </section>
+
+  <main>
+    <section id="produtos" class="secao">
+      <div class="titulo-secao">
+        <div>
+          <h2>Nossos produtos</h2>
+          <p>Confira o que temos disponível.</p>
+        </div>
+        <input
+          type="search"
+          id="pesquisa"
+          placeholder="Pesquisar produto..."
+          aria-label="Pesquisar produto"
+        >
+      </div>
+
+      <div id="listaProdutos" class="grade-produtos"></div>
+      <p id="mensagemProdutos" class="mensagem-vazia" hidden>
+        Nenhum produto encontrado.
+      </p>
+    </section>
+
+    <section id="administracao" class="secao administracao">
+      <div class="cabecalho-admin">
+        <div>
+          <p class="etiqueta">ÁREA DO PROPRIETÁRIO</p>
+          <h2>Administrar minha loja</h2>
+          <p>Cadastre, edite preços e gerencie seus produtos.</p>
+        </div>
+      </div>
+
+      <form id="formProduto" class="formulario">
+        <h3 id="tituloFormulario">Cadastrar novo produto</h3>
+
+        <input type="hidden" id="produtoId">
+
+        <div class="campos">
+          <label>
+            Nome do produto
+            <input
+              type="text"
+              id="nome"
+              placeholder="Ex.: Camiseta masculina"
+              required
+            >
+          </label>
+
+          <label>
+            Preço (R$)
+            <input
+              type="number"
+              id="preco"
+              min="0.01"
+              step="0.01"
+              placeholder="Ex.: 49,90"
+              required
+            >
+          </label>
+
+          <label>
+            Categoria
+            <input
+              type="text"
+              id="categoria"
+              placeholder="Ex.: Roupas"
+            >
+          </label>
+
+          <label>
+            Quantidade em estoque
+            <input
+              type="number"
+              id="estoque"
+              min="0"
+              step="1"
+              value="10"
+              required
+            >
+          </label>
+
+          <label class="campo-completo">
+            Endereço da imagem (URL)
+            <input
+              type="url"
+              id="imagem"
+              placeholder="https://site.com/imagem.jpg"
+            >
+          </label>
+
+          <label class="campo-completo">
+            Descrição do produto
+            <textarea
+              id="descricao"
+              rows="3"
+              placeholder="Descreva seu produto..."
+            ></textarea>
+          </label>
+        </div>
+
+        <div class="acoes-formulario">
+          <button type="submit" class="botao principal" id="botaoSalvar">
+            Cadastrar produto
+          </button>
+          <button
+            type="button"
+            class="botao secundario"
+            id="botaoCancelar"
+            hidden
+            onclick="cancelarEdicao()"
+          >
+            Cancelar edição
+          </button>
+        </div>
+
+        <p id="mensagemAdmin" class="mensagem-admin" role="status"></p>
+      </form>
+
+      <div class="tabela-container">
+        <h3>Produtos cadastrados</h3>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Produto</th>
+              <th>Preço</th>
+              <th>Estoque</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody id="tabelaProdutos"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <div id="areaCarrinho" class="fundo-modal" hidden>
+    <section
+      class="modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="tituloCarrinho"
+    >
+      <div class="modal-topo">
+        <h2 id="tituloCarrinho">Meu carrinho</h2>
+        <button
+          class="fechar-modal"
+          onclick="fecharCarrinho()"
+          aria-label="Fechar carrinho"
+        >✕</button>
+      </div>
+
+      <div id="itensCarrinho"></div>
+
+      <div class="total-carrinho">
+        <span>Total:</span>
+        <strong id="totalCarrinho">R$ 0,00</strong>
+      </div>
+
+      <button
+        class="botao principal botao-largo"
+        onclick="finalizarCompra()"
+      >
+        Finalizar pelo WhatsApp
+      </button>
+
+      <p class="observacao">
+        Configure seu número de WhatsApp no arquivo script.js para receber pedidos.
+      </p>
+    </section>
+  </div>
+
+  <footer>
+    <p>© <span id="anoAtual"></span> Minha Lojinha. Todos os direitos reservados.</p>
+  </footer>
+
+</body>
+</html>
+<section class="contato-loja">
+  <h2>Entre em contato</h2>
+  <p>Fale conosco pelo WhatsApp!</p>
+  <p>Telefone: (88) 98127-0156</p>
+  <a
+href="https://wa.me/5588981270156"
+target="_blank"
+rel="noopener noreferrer"
+class="botao-whatsapp"
+
+>
+
+<span>💬</span> Falar com o dono da loja pelo WhatsApp </a>
+
+  </a>
+</section>
+<section class="contato-loja">
+  <h2>📍 Onde estamos</h2>
+  <p><strong>Endereço:</strong> Rua Pleopotenciário Bartolino Campos, nº 02</p>
+
+<a
+href="https://www.google.com/maps/search/?api=1&query=Rua+Pleopotenciario+Bartolino+Campos+Numero+02"
+target="_blank"
+rel="noopener noreferrer"
+class="botao-localizacao"
+
+>
+
+```
+Ver localização no Google Maps
+```
+
+  </a>
+
+<a
+href="https://wa.me/5588981270156"
+target="_blank"
+rel="noopener noreferrer"
+
+  </a>
+</section>
